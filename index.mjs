@@ -124,4 +124,15 @@ app.get('/select-categorie/:id_categorie', (req, res) => {
   })
 })
 
+app.get('/get-product-for-name/', (req, res) => {
+  const sql = `SELECT * FROM products  WHERE nombre = '${req.body.nombre}'`
+
+  db.query(sql, (err, result) => {
+    if (err) throw err
+
+    res.send('Get product for name')
+    console.log(result)
+  })
+})
+
 app.listen(3000, () => console.log('locahost://3000'))
