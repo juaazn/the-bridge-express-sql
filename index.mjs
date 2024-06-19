@@ -92,12 +92,34 @@ app.get('/get-categorias', (req, res) => {
 })
 
 app.get('/get-products-categories', (req, res) => {
-  const sql = 'SELECT products.id AS product_id, products.nombre AS product_name, products.precio AS product_price, categories.categorias AS category_name FROM products AS products JOIN categories AS categories ON products.category_id = categories.id'
+  const sql = 'SELECT p.id AS Id_producto,  p.nombre AS Nombre_Producto, p.precio AS Precio_Producto, c.categoria AS Categorias FROM products p JOIN categories c ON p.id_categorie = c.id_categorie'
 
   db.query(sql, (err, result) => {
     if (err) throw err
 
-    res.send('Get products ans categories')
+    res.send('Get products and categories')
+    console.log(result)
+  })
+})
+
+app.get('/select-product/:id', (req, res) => {
+  const sql = `SELECT * FROM products WHERE id = ${req.params.id}`
+
+  db.query(sql, (err, result) => {
+    if (err) throw err
+
+    res.send('Product select for id')
+    console.log(result)
+  })
+})
+
+app.get('/select-categorie/:id_categorie', (req, res) => {
+  const sql = `SELECT * FROM categories WHERE id_categorie = ${req.params.id_categorie}`
+
+  db.query(sql, (err, result) => {
+    if (err) throw err
+
+    res.send('Categorie select for id')
     console.log(result)
   })
 })
